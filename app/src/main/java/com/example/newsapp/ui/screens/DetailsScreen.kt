@@ -9,9 +9,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
+import com.example.newsapp.NewsData
 
 @Composable
-fun DetailsScreen(navController: NavController) {
+fun DetailsScreen(navController: NavController, newsData: NewsData) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -21,7 +22,7 @@ fun DetailsScreen(navController: NavController) {
             fontWeight = FontWeight.SemiBold
         )
         Button(onClick = { navController.navigate("TopNews") }) {
-            Text(text = "Go To Details Screen")
+            Text(text = "Go To Details Screen + ${newsData.author}")
         }
     }
 }

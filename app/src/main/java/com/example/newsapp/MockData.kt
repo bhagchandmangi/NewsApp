@@ -64,8 +64,8 @@ object MockData {
             description = "Picker is the most powerful men",
             publishedAt = "12:23:00:09:10:2023"
         ),
-
-
-
     )
+    fun getNews(newsId: Int?):NewsData{
+        return topNewsList.first{it.id == newsId}
+    }
 }

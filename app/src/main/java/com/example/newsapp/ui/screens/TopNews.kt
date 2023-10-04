@@ -1,10 +1,12 @@
 package com.example.newsapp.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -34,13 +36,17 @@ fun TopNews(navController: NavController) {
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Top News",
-            fontWeight = FontWeight.SemiBold)
+        Text(
+            text = "Top News",
+            fontWeight = FontWeight.SemiBold
+        )
         LazyColumn(
-        ){
-            items(MockData.topNewsList){
-                 newsData ->
-                TopNewsItem(newsData = newsData)
+            modifier = Modifier.fillMaxSize()
+        ) {
+            items(MockData.topNewsList) { newsData ->
+                TopNewsItem(newsData = newsData, onNewsClick = {
+                    navController.navigate("Details/${newsData.id}")
+                })
             }
         }
         Button(onClick = { navController.navigate("Details") }) {
@@ -50,31 +56,39 @@ fun TopNews(navController: NavController) {
 }
 
 @Composable
-fun TopNewsItem(newsData: NewsData) {
+fun TopNewsItem(newsData: NewsData, onNewsClick: () -> Unit = {}) {
     Box(
         modifier = Modifier
             .height(200.dp)
             .padding(8.dp)
+            .clickable { onNewsClick() }
     ) {
-        Image(painter = painterResource(id = newsData.image),
+        Image(
+            painter = painterResource(id = newsData.image),
             contentDescription = newsData.title,
-            contentScale = ContentScale.FillBounds)
+            contentScale = ContentScale.FillBounds
+        )
         Column(
             modifier = Modifier
                 .wrapContentHeight()
                 .padding(top = 16.dp, start = 16.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = newsData.publishedAt,
+            Text(
+                text = newsData.publishedAt,
                 color = Color.White,
-                fontWeight = FontWeight.SemiBold)
+                fontWeight = FontWeight.SemiBold
+            )
             Spacer(modifier = Modifier.height(80.dp))
-            Text(text = newsData.title,
+            Text(
+                text = newsData.title,
                 color = Color.White,
-                fontWeight = FontWeight.SemiBold)
+                fontWeight = FontWeight.SemiBold
+            )
         }
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewTopNews() {
