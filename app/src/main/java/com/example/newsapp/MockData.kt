@@ -18,7 +18,7 @@ object MockData {
             publishedAt = "2023-11-04T01:55:30"
         ),
         NewsData(
-            1,
+            2,
             image = R.drawable.person_02,
             author = "Mangi",
             title = "jetpack Compose",
@@ -26,7 +26,7 @@ object MockData {
             publishedAt = "2023-11-04T01:55:30"
         ),
         NewsData(
-            1,
+            3,
             image = R.drawable.person_02,
             author = "Mangi",
             title = "jetpack Compose",
@@ -34,21 +34,21 @@ object MockData {
             publishedAt = "2023-11-04T01:55:30"
         ),
         NewsData(
-            1,
+            4,
             image = R.drawable.person_02,
             author = "Mangi",
             title = "jetpack Compose",
             description = "Picker is the most powerful men",
             publishedAt = "2023-11-04T01:55:30"
         ),NewsData(
-            1,
+            5,
             image = R.drawable.person_02,
             author = "Mangi",
             title = "jetpack Compose",
             description = "Picker is the most powerful men",
             publishedAt = "2023-11-04T01:55:30"
         ),NewsData(
-            1,
+            6,
             image = R.drawable.person_02,
             author = "Mangi",
             title = "jetpack Compose",
@@ -56,7 +56,7 @@ object MockData {
             publishedAt = "2023-11-04T01:55:30"
         ),
         NewsData(
-            1,
+            7,
             image = R.drawable.person_02,
             author = "Mangi",
             title = "jetpack Compose",
@@ -64,7 +64,7 @@ object MockData {
             publishedAt = "2023-11-04T01:55:30"
         ),
         NewsData(
-            1,
+            8,
             image = R.drawable.person_02,
             author = "Mangi",
             title = "jetpack Compose",
