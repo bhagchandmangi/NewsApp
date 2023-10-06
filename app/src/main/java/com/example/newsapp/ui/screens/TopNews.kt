@@ -1,6 +1,6 @@
 package com.example.newsapp.ui.screens
 
-import androidx.compose.foundation.Image
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,7 +29,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.newsapp.MockData
 import com.example.newsapp.MockData.getTimeAgo
 import com.example.newsapp.NewsData
-import com.example.newsapp.R
+import com.example.newsapp.models.TopNewsArticles
+import com.skydoves.landscapist.ImageOptions
+import com.skydoves.landscapist.coil.CoilImage
 
 @Composable
 fun TopNews(navController: NavController) {
@@ -45,7 +47,7 @@ fun TopNews(navController: NavController) {
             modifier = Modifier.fillMaxSize()
         ) {
             items(MockData.topNewsList) { newsData ->
-                TopNewsItem(newsData = newsData, onNewsClick = {
+                TopNewsItem(articles = TopNewsArticles(), onNewsClick = {
                     navController.navigate("Details/${newsData.id}")
                 })
             }
@@ -57,18 +59,22 @@ fun TopNews(navController: NavController) {
 }
 
 @Composable
-fun TopNewsItem(newsData: NewsData, onNewsClick: () -> Unit = {}) {
+fun TopNewsItem(articles: TopNewsArticles, onNewsClick: () -> Unit = {}) {
     Box(
         modifier = Modifier
             .height(200.dp)
             .padding(8.dp)
             .clickable { onNewsClick() }
     ) {
-        Image(
-            painter = painterResource(id = newsData.image),
-            contentDescription = newsData.title,
-            contentScale = ContentScale.FillBounds
+        CoilImage(
+            imageModel = { articles.urlToImage }, // loading a network image or local resource using an URL.
+            imageOptions = ImageOptions(
+                contentScale = ContentScale.Crop,
+                alignment = Alignment.Center
+            )
+
         )
+
         Column(
             modifier = Modifier
                 .wrapContentHeight()
@@ -76,16 +82,18 @@ fun TopNewsItem(newsData: NewsData, onNewsClick: () -> Unit = {}) {
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = MockData.stringToDate(newsData.publishedAt).getTimeAgo(),
+                text = articles.publishedAt?.let { MockData.stringToDate(it).getTimeAgo() },
                 color = Color.White,
                 fontWeight = FontWeight.SemiBold
             )
             Spacer(modifier = Modifier.height(80.dp))
-            Text(
-                text = newsData.title,
-                color = Color.White,
-                fontWeight = FontWeight.SemiBold
-            )
+            articles.title?.let {
+                Text(
+                    text = it,
+                    color = Color.White,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
         }
     }
 }
