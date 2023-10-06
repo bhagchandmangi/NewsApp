@@ -1,6 +1,7 @@
 package com.example.newsapp.ui
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -20,6 +21,7 @@ import androidx.navigation.navArgument
 import com.example.newsapp.BottomMenuScreen
 import com.example.newsapp.MockData
 import com.example.newsapp.components.BottomMenu
+import com.example.newsapp.network.NewsManager
 import com.example.newsapp.ui.screens.Categories
 import com.example.newsapp.ui.screens.DetailsScreen
 import com.example.newsapp.ui.screens.Sources
@@ -31,6 +33,7 @@ fun NewsApp() {
     val navController = rememberNavController()
     MainScreen(navController, scrollState)
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(navController: NavHostController, scrollState: ScrollState) {
@@ -38,7 +41,7 @@ fun MainScreen(navController: NavHostController, scrollState: ScrollState) {
         bottomBar = {
             BottomMenu(navController)
         }
-    ) {innerPadding ->
+    ) { innerPadding ->
         Box(
             modifier = Modifier.padding(innerPadding)
         ) {
@@ -46,20 +49,26 @@ fun MainScreen(navController: NavHostController, scrollState: ScrollState) {
         }
     }
 }
+
 @Composable
-fun Navigation(navController: NavHostController, scrollState: ScrollState){
+fun Navigation(
+    navController: NavHostController,
+    scrollState: ScrollState,
+    newsManager: NewsManager = NewsManager()
+) {
+    val articles = newsManager.newsResponse.value.articles
+    Log.d("news", "$articles")
     NavHost(navController = navController, startDestination = "TopNews") {
         bottomNavigation(navController = navController)
-        composable("TopNews"){
+        composable("TopNews") {
             TopNews(navController = navController)
         }
         composable("Details/{newsId}",
             arguments = listOf(
-                navArgument("newsId"){
+                navArgument("newsId") {
                     type = NavType.IntType
                 }
-            )){
-            navBackStackEntry ->
+            )) { navBackStackEntry ->
             val id = navBackStackEntry.arguments?.getInt("newsId")
             val newsData = MockData.getNews(id)
             DetailsScreen(newsData, scrollState = scrollState, navController)
@@ -68,10 +77,10 @@ fun Navigation(navController: NavHostController, scrollState: ScrollState){
 }
 
 fun NavGraphBuilder.bottomNavigation(navController: NavController) {
-    composable(BottomMenuScreen.TopNews.route){
+    composable(BottomMenuScreen.TopNews.route) {
         TopNews(navController = navController)
     }
-    composable(BottomMenuScreen.Categories.route){
+    composable(BottomMenuScreen.Categories.route) {
         Categories()
     }
     composable(BottomMenuScreen.Sources.route)
