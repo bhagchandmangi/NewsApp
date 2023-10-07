@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,6 +22,7 @@ import androidx.navigation.navArgument
 import com.example.newsapp.BottomMenuScreen
 import com.example.newsapp.MockData
 import com.example.newsapp.components.BottomMenu
+import com.example.newsapp.models.TopNewsArticles
 import com.example.newsapp.network.NewsManager
 import com.example.newsapp.ui.screens.Categories
 import com.example.newsapp.ui.screens.DetailsScreen
@@ -42,10 +44,8 @@ fun MainScreen(navController: NavHostController, scrollState: ScrollState) {
             BottomMenu(navController)
         }
     ) { innerPadding ->
-        Box(
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            Navigation(navController, scrollState)
+        Box {
+            Navigation(navController, scrollState, paddingValues = innerPadding)
         }
     }
 }
@@ -54,31 +54,43 @@ fun MainScreen(navController: NavHostController, scrollState: ScrollState) {
 fun Navigation(
     navController: NavHostController,
     scrollState: ScrollState,
-    newsManager: NewsManager = NewsManager()
+    newsManager: NewsManager = NewsManager(),
+    paddingValues: PaddingValues
 ) {
     val articles = newsManager.newsResponse.value.articles
     Log.d("news", "$articles")
-    NavHost(navController = navController, startDestination = "TopNews") {
-        bottomNavigation(navController = navController)
-        composable("TopNews") {
-            TopNews(navController = navController)
-        }
-        composable("Details/{newsId}",
-            arguments = listOf(
-                navArgument("newsId") {
-                    type = NavType.IntType
+    NavHost(
+        navController = navController,
+        startDestination = BottomMenuScreen.TopNews.route,
+        modifier = Modifier.padding(paddingValues)
+    ) {
+        articles?.let {
+            bottomNavigation(navController = navController, articles)
+            composable("TopNews") {
+                TopNews(navController = navController, articles)
+            }
+            composable("Details/{index}",
+                arguments = listOf(
+                    navArgument("index") {
+                        type = NavType.IntType
+                    }
+                )) { navBackStackEntry ->
+                val index = navBackStackEntry.arguments?.getInt("index")
+                index?.let {
+                    val articles = articles[index]
+                    DetailsScreen(articles, scrollState = scrollState, navController)
                 }
-            )) { navBackStackEntry ->
-            val id = navBackStackEntry.arguments?.getInt("newsId")
-            val newsData = MockData.getNews(id)
-            DetailsScreen(newsData, scrollState = scrollState, navController)
+            }
         }
     }
 }
 
-fun NavGraphBuilder.bottomNavigation(navController: NavController) {
+fun NavGraphBuilder.bottomNavigation(
+    navController: NavController,
+    articles: List<TopNewsArticles>
+) {
     composable(BottomMenuScreen.TopNews.route) {
-        TopNews(navController = navController)
+        TopNews(navController = navController, articles)
     }
     composable(BottomMenuScreen.Categories.route) {
         Categories()

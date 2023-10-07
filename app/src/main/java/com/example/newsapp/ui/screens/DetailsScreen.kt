@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,10 +36,17 @@ import com.example.newsapp.MockData
 import com.example.newsapp.MockData.getTimeAgo
 import com.example.newsapp.NewsData
 import com.example.newsapp.R
+import com.example.newsapp.models.TopNewsArticles
+import com.skydoves.landscapist.ImageOptions
+import com.skydoves.landscapist.coil.CoilImage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailsScreen(newsData: NewsData, scrollState: ScrollState, navController: NavController) {
+fun DetailsScreen(
+    articles: TopNewsArticles,
+    scrollState: ScrollState,
+    navController: NavController
+) {
     Scaffold(
         topBar = {
             DetailsTopAppBar(onBackPressed = { navController.popBackStack() })
@@ -56,21 +64,27 @@ fun DetailsScreen(newsData: NewsData, scrollState: ScrollState, navController: N
                 text = "Details Screen",
                 fontWeight = FontWeight.SemiBold
             )
-            Image(painter = painterResource(id = newsData.image), contentDescription = "")
+            CoilImage(
+                imageModel = { articles.urlToImage }, // loading a network image or local resource using an URL.
+                imageOptions = ImageOptions(
+                    contentScale = ContentScale.Crop,
+                    alignment = Alignment.Center
+                )
+            )
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                InfoWithIcon(icon = Icons.Default.Edit, info = newsData.author)
+                InfoWithIcon(icon = Icons.Default.Edit, info = articles.author ?: "Not available")
                 InfoWithIcon(
                     icon = Icons.Default.DateRange,
-                    info = MockData.stringToDate(newsData.publishedAt).getTimeAgo()
+                    info = MockData.stringToDate(articles.publishedAt!!).getTimeAgo()
                 )
             }
-            Text(text = newsData.title, fontWeight = FontWeight.Bold)
-            Text(text = newsData.description, modifier = Modifier.padding(top = 16.dp))
+            Text(text = articles.title!!, fontWeight = FontWeight.Bold)
+            Text(text = articles.description!!, modifier = Modifier.padding(top = 16.dp))
         }
     }
 }
@@ -108,9 +122,7 @@ fun InfoWithIcon(icon: ImageVector, info: String) {
 @Composable
 fun PreviewDetailsScreen() {
     DetailsScreen(
-        newsData = NewsData(
-            1,
-            image = R.drawable.person_02,
+        TopNewsArticles(
             author = "Mangi",
             title = "jetpack Compose",
             description = " This is an example of a scaffold. It uses the Scaffold composable's parameters to create a screen with a simple top app bar, bottom app bar, and floating action button. It also contains some basic inner content, such as this text. You have pressed the floating action button times.",
