@@ -34,7 +34,7 @@ import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil.CoilImage
 
 @Composable
-fun TopNews(navController: NavController) {
+fun TopNews(navController: NavController, articles: List<TopNewsArticles>) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -46,10 +46,11 @@ fun TopNews(navController: NavController) {
         LazyColumn(
             modifier = Modifier.fillMaxSize()
         ) {
-            items(MockData.topNewsList) { newsData ->
-                TopNewsItem(articles = TopNewsArticles(), onNewsClick = {
-                    navController.navigate("Details/${newsData.id}")
-                })
+            items(articles.size) { index ->
+                TopNewsItem(
+                    articles = articles[index],
+                    onNewsClick = { }
+                )
             }
         }
         Button(onClick = { navController.navigate("Details") }) {
@@ -81,19 +82,18 @@ fun TopNewsItem(articles: TopNewsArticles, onNewsClick: () -> Unit = {}) {
                 .padding(top = 16.dp, start = 16.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
+
             Text(
-                text = articles.publishedAt?.let { MockData.stringToDate(it).getTimeAgo() },
+                text = MockData.stringToDate(articles.publishedAt!!).getTimeAgo(),
                 color = Color.White,
                 fontWeight = FontWeight.SemiBold
             )
             Spacer(modifier = Modifier.height(80.dp))
-            articles.title?.let {
-                Text(
-                    text = it,
-                    color = Color.White,
-                    fontWeight = FontWeight.SemiBold
-                )
-            }
+            Text(
+                text = articles.title!!,
+                color = Color.White,
+                fontWeight = FontWeight.SemiBold
+            )
         }
     }
 }
@@ -101,7 +101,12 @@ fun TopNewsItem(articles: TopNewsArticles, onNewsClick: () -> Unit = {}) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewTopNews() {
-    TopNews(
-        rememberNavController()
+    TopNewsItem(
+        articles = TopNewsArticles(
+            author = "Mangi",
+            title = "Kotlin",
+            description = "It is mobile application",
+            publishedAt = "2021-12-3T04:43:40Z"
+        )
     )
 }
