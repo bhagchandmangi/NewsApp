@@ -49,7 +49,9 @@ fun TopNews(navController: NavController, articles: List<TopNewsArticles>) {
             items(articles.size) { index ->
                 TopNewsItem(
                     articles = articles[index],
-                    onNewsClick = { }
+                    onNewsClick = {
+                        navController.navigate("Details/$index")
+                    }
                 )
             }
         }
