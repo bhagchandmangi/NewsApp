@@ -13,7 +13,8 @@ object MockData {
             1,
             image = R.drawable.person_02,
             author = "Mangi",
-            title = "jetpack Compose",
+            title = "Picker is the most powerful men. This is an example of a scaffold. It uses the Scaffold composable's parameters to create a screen with a simple top app bar, bottom app bar, and floating action button.\\n\" +\n" +
+                    "                    \"It also contains some basic inner content, such as this text.",
             description = "Picker is the most powerful men",
             publishedAt = "2023-11-04T01:55:30"
         ),
@@ -21,7 +22,8 @@ object MockData {
             2,
             image = R.drawable.person_02,
             author = "Mangi",
-            title = "jetpack Compose",
+            title = "Picker is the most powerful men. This is an example of a scaffold. It uses the Scaffold composable's parameters to create a screen with a simple top app bar, bottom app bar, and floating action button.\\n\" +\n" +
+                    "                    \"It also contains some basic inner content, such as this text.",
             description = "Picker is the most powerful men",
             publishedAt = "2023-11-04T01:55:30"
         ),
@@ -29,7 +31,8 @@ object MockData {
             3,
             image = R.drawable.person_02,
             author = "Mangi",
-            title = "jetpack Compose",
+            title = "Picker is the most powerful men. This is an example of a scaffold. It uses the Scaffold composable's parameters to create a screen with a simple top app bar, bottom app bar, and floating action button.\\n\" +\n" +
+                    "                    \"It also contains some basic inner content, such as this text.",
             description = "Picker is the most powerful men",
             publishedAt = "2023-11-04T01:55:30"
         ),
@@ -37,21 +40,24 @@ object MockData {
             4,
             image = R.drawable.person_02,
             author = "Mangi",
-            title = "jetpack Compose",
+            title = "Picker is the most powerful men. This is an example of a scaffold. It uses the Scaffold composable's parameters to create a screen with a simple top app bar, bottom app bar, and floating action button.\\n\" +\n" +
+                    "                    \"It also contains some basic inner content, such as this text.",
             description = "Picker is the most powerful men",
             publishedAt = "2023-11-04T01:55:30"
         ),NewsData(
             5,
             image = R.drawable.person_02,
             author = "Mangi",
-            title = "jetpack Compose",
+            title = "Picker is the most powerful men. This is an example of a scaffold. It uses the Scaffold composable's parameters to create a screen with a simple top app bar, bottom app bar, and floating action button.\\n\" +\n" +
+                    "                    \"It also contains some basic inner content, such as this text.",
             description = "Picker is the most powerful men",
             publishedAt = "2023-11-04T01:55:30"
         ),NewsData(
             6,
             image = R.drawable.person_02,
             author = "Mangi",
-            title = "jetpack Compose",
+            title = "Picker is the most powerful men. This is an example of a scaffold. It uses the Scaffold composable's parameters to create a screen with a simple top app bar, bottom app bar, and floating action button.\\n\" +\n" +
+                    "                    \"It also contains some basic inner content, such as this text.",
             description = "Picker is the most powerful men",
             publishedAt = "2023-11-04T01:55:30"
         ),
@@ -59,7 +65,8 @@ object MockData {
             7,
             image = R.drawable.person_02,
             author = "Mangi",
-            title = "jetpack Compose",
+            title = "Picker is the most powerful men. This is an example of a scaffold. It uses the Scaffold composable's parameters to create a screen with a simple top app bar, bottom app bar, and floating action button.\\n\" +\n" +
+                    "                    \"It also contains some basic inner content, such as this text.",
             description = "Picker is the most powerful men",
             publishedAt = "2023-11-04T01:55:30"
         ),
@@ -67,7 +74,8 @@ object MockData {
             8,
             image = R.drawable.person_02,
             author = "Mangi",
-            title = "jetpack Compose",
+            title = "Picker is the most powerful men. This is an example of a scaffold. It uses the Scaffold composable's parameters to create a screen with a simple top app bar, bottom app bar, and floating action button.\\n\" +\n" +
+                    "                    \"It also contains some basic inner content, such as this text.",
             description = "Picker is the most powerful men. This is an example of a scaffold. It uses the Scaffold composable's parameters to create a screen with a simple top app bar, bottom app bar, and floating action button.\n" +
                     "It also contains some basic inner content, such as this text. You have pressed the floating action button  times.",
             publishedAt = "2023-11-04T01:55:30"

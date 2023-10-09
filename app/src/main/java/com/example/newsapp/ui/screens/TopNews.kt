@@ -72,7 +72,7 @@ fun TopNewsItem(articles: TopNewsArticles, onNewsClick: () -> Unit = {}) {
         CoilImage(
             imageModel = { articles.urlToImage }, // loading a network image or local resource using an URL.
             imageOptions = ImageOptions(
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.Fit,
                 alignment = Alignment.Center
             )
 
