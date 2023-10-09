@@ -1,7 +1,9 @@
 package com.example.newsapp.ui.screens
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -11,10 +13,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import com.example.newsapp.R
+import com.example.newsapp.models.getAllArticleCategory
+import com.example.newsapp.network.NewsManager
 
 @Composable
-fun Categories() {
-    Text(text = "Categories")
+fun Categories(onFetchCategory: (String) -> Unit = {}, newsManager: NewsManager) {
+    val tabsItems = getAllArticleCategory()
+    Column {
+        LazyRow() {
+            items(tabsItems.size) {
+                val category = tabsItems[it]
+                CategoryTab(
+                    category = category.categoryName,
+                    onFetchCategory = onFetchCategory,
+                    isSelected = newsManager.selectedCategory.value == category)
+            }
+        }
+    }
 }
 
 @Composable
