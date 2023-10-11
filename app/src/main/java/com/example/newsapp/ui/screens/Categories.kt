@@ -92,7 +92,8 @@ fun ArticleContent(articles: List<TopNewsArticles>, modifier: Modifier = Modifie
                         imageModel = { item.urlToImage }, // loading a network image or local resource using an URL.
                         imageOptions = ImageOptions(
                             contentScale = ContentScale.Crop,
-                            alignment = Alignment.Center
+                            alignment = Alignment.Center,
+                            contentDescription = item.title
                         ),
                         modifier = Modifier.size(100.dp)
                     )

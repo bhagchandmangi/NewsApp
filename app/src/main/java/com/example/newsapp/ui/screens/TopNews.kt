@@ -66,15 +66,20 @@ fun TopNewsItem(articles: TopNewsArticles, onNewsClick: () -> Unit = {}) {
     Box(
         modifier = Modifier
             .height(200.dp)
+            .fillMaxWidth()
             .padding(8.dp)
             .clickable { onNewsClick() }
     ) {
         CoilImage(
             imageModel = { articles.urlToImage }, // loading a network image or local resource using an URL.
             imageOptions = ImageOptions(
-                contentScale = ContentScale.Fit,
-                alignment = Alignment.Center
-            )
+                contentScale = ContentScale.Crop,
+                alignment = Alignment.Center,
+                contentDescription = articles.title
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
 
         )
 
@@ -103,12 +108,10 @@ fun TopNewsItem(articles: TopNewsArticles, onNewsClick: () -> Unit = {}) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewTopNews() {
-    TopNewsItem(
-        articles = TopNewsArticles(
-            author = "Mangi",
-            title = "Kotlin",
-            description = "It is mobile application",
-            publishedAt = "2021-12-3T04:43:40Z"
+    TopNews(
+        navController = rememberNavController(),
+        articles = listOf(
+
         )
     )
 }
