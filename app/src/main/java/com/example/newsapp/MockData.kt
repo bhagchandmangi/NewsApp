@@ -8,7 +8,7 @@ import java.util.Date
 import java.util.Locale
 
 object MockData {
-    val topNewsList = listOf<NewsData>(
+    private val topNewsList = listOf<NewsData>(
         NewsData(
             1,
             image = R.drawable.person_02,
